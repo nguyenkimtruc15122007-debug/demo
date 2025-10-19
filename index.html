@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tặng Tuyết Phương 💌</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      height: 100vh;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      position: relative;
+      background: #ffeef5;
+    }
+
+    /* Màn hình mật khẩu */
+    .password-screen {
+      position: fixed;
+      inset: 0;
+      background: linear-gradient(135deg, #ffd6e9, #ffe6f2);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 100;
+      text-align: center;
+    }
+
+    .password-box {
+      background: #fff0f6;
+      padding: 30px 40px;
+      border-radius: 16px;
+      box-shadow: 0 8px 20px rgba(255, 100, 150, 0.25);
+      border: 2px solid #ffb6c1;
+      animation: pop 0.6s ease;
+    }
+
+    .password-box h2 { color: #ff4d88; margin-bottom: 15px; }
+    .password-input {
+      padding: 10px 15px;
+      font-size: 16px;
+      border-radius: 10px;
+      border: 2px solid #ffb6c1;
+      text-align: center;
+      color: #ff4d88;
+      outline: none;
+    }
+
+    .password-btn {
+      margin-top: 15px;
+      padding: 10px 20px;
+      background: #ff8fb1;
+      border: none;
+      border-radius: 8px;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    .password-btn:hover { background: #ff6b9d; }
+    .error { margin-top: 10px; color: #d63384; font-size: 14px; font-style: italic; }
+
+    @keyframes pop {
+      from { transform: scale(0.8); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    /* Phần bức thư */
+    .letter-section {
+      display: none;
+      width: 100%;
+      height: 100vh;
+      justify-content: center;
+      align-items: center;
+      background: url('hello-kitty.jpg') no-repeat center center fixed;
+      background-size: cover;
+      position: relative;
+    }
+
+    .letter-section::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(255, 240, 248, 0.7);
+      backdrop-filter: blur(2px);
+      z-index: 0;
+    }
+
+    /* Phong bì */
+    .envelope {
+      position: relative;
+      width: 320px;
+      height: 220px;
+      background: #ffdde8;
+      border-radius: 8px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.25);
+      cursor: pointer;
+      overflow: hidden;
+      transition: transform 0.4s ease;
+      z-index: 5;
+    }
+
+    .envelope:hover { transform: scale(1.05); }
+
+    .flap {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 0;
+      height: 0;
+      border-left: 160px solid transparent;
+      border-right: 160px solid transparent;
+      border-top: 100px solid #ffc6d9;
+      border-radius: 10px;
+      transform-origin: top;
+      transition: transform 0.6s ease;
+      z-index: 6;
+    }
+
+    .bottom {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 130px;
+      background: #ffd0df;
+      border-radius: 0 0 8px 8px;
+      z-index: 4;
+    }
+
+    .seal {
+      position: absolute;
+      top: 80px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 36px;
+      height: 36px;
+      background: #ff4d6d;
+      border-radius: 50%;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+      z-index: 7;
+      transition: opacity 0.3s ease;
+    }
+
+    .letter {
+      position: absolute;
+      top: 60%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0);
+      width: 300px;
+      height: 350px;
+      background: #fffafc;
+      border-radius: 10px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+      padding: 25px;
+      text-align: left;
+      color: #444;
+      font-size: 17px;
+      line-height: 1.6;
+      transition: transform 0.6s ease;
+      z-index: 10;
+    }
+    .letter.show { transform: translate(-50%, -60%) scale(1); }
+
+    .open .flap { transform: rotateX(180deg); }
+    .open .seal { opacity: 0; }
+
+    .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      background: #ff8fb1;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 28px;
+      height: 28px;
+      font-size: 18px;
+      cursor: pointer;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    }
+
+    /* ✨ Hạt lấp lánh lung linh */
+    .sparkle {
+      position: fixed;
+      width: 8px;
+      height: 8px;
+      background: radial-gradient(circle, #fff, #ffd6e9, #ffc2e0);
+      border-radius: 50%;
+      opacity: 0.9;
+      animation: sparkle 6s linear infinite;
+      pointer-events: none;
+      z-index: 2;
+      filter: drop-shadow(0 0 5px #fff);
+    }
+
+    @keyframes sparkle {
+      0% { transform: translateY(-10px) scale(0.3) rotate(0deg); opacity: 0; }
+      20% { opacity: 1; }
+      50% { transform: translateY(50vh) scale(1) rotate(180deg); opacity: 0.8; }
+      100% { transform: translateY(100vh) scale(0.3) rotate(360deg); opacity: 0; }
+    }
+
+    /* 🩷 Ảnh Hello Kitty ở 2 góc */
+    .kitty {
+      position: absolute;
+      width: 120px;
+      z-index: 3;
+      opacity: 0.9;
+    }
+    .kitty.top-left { top: 20px; left: 20px; transform: rotate(-10deg); }
+    .kitty.bottom-right { bottom: 20px; right: 20px; transform: rotate(10deg); }
+  </style>
+</head>
+<body>
+  <div class="password-screen" id="passwordScreen">
+    <div class="password-box">
+      <h2>🔐 Nhập mật khẩu để mở bức thư 🔐</h2>
+      <input type="password" id="passwordInput" class="password-input" placeholder="Nhập mật khẩu..." />
+      <br>
+      <button class="password-btn" id="checkPassword">Mở thư</button>
+      <div class="error" id="errorText"></div>
+    </div>
+  </div>
+
+  <div class="letter-section" id="letterSection">
+    <img src="hello-kitty.png" class="kitty top-left" />
+    <img src="hello-kitty.png" class="kitty bottom-right" />
+
+    <div class="envelope" id="envelope">
+      <div class="flap"></div>
+      <div class="seal"></div>
+      <div class="bottom"></div>
+    </div>
+
+    <div class="letter" id="letter">
+      <button class="close-btn" id="closeBtn">×</button>
+      <h2 style="text-align:center; color:#ff4d88;">💌 Gửi đến Tuyết Phương 💌</h2>
+      <p>
+        Hôm nay 20 tháng 10,
+        Bông hoa đẹp nhất tặng người tui thương!  
+        Chúc Tuyết Phương luôn xinh đẹp, luôn nhận được những điều tốt đẹp nhất ạaaaaaa! 
+      </p>
+      <p style="text-align:right; font-style:italic;">— NKT 💐</p>
+    </div>
+
+    <audio id="bgm" loop>
+      <source src="nhac.mp3" type="audio/mpeg">
+    </audio>
+  </div>
+
+  <script>
+    const passwordScreen = document.getElementById("passwordScreen");
+    const letterSection = document.getElementById("letterSection");
+    const passwordInput = document.getElementById("passwordInput");
+    const checkPassword = document.getElementById("checkPassword");
+    const errorText = document.getElementById("errorText");
+    const bgm = document.getElementById("bgm");
+
+    checkPassword.addEventListener("click", () => {
+      const pass = passwordInput.value.trim();
+      if (pass === "15052007") {
+        passwordScreen.style.display = "none";
+        letterSection.style.display = "flex";
+        bgm.play();
+        createSparkles();
+      } else {
+        errorText.textContent = "Sai rồi người đẹp ^^";
+      }
+    });
+
+    const envelope = document.getElementById("envelope");
+    const letter = document.getElementById("letter");
+    const closeBtn = document.getElementById("closeBtn");
+
+    envelope.addEventListener("click", () => {
+      envelope.classList.add("open");
+      setTimeout(() => letter.classList.add("show"), 600);
+    });
+
+    closeBtn.addEventListener("click", () => {
+      letter.classList.remove("show");
+      envelope.classList.remove("open");
+    });
+
+    // ✨ Lung linh hơn: nhiều màu, rơi chậm, xoay nhẹ
+    function createSparkles() {
+      const sparkleCount = 40;
+      for (let i = 0; i < sparkleCount; i++) {
+        const sparkle = document.createElement("div");
+        sparkle.classList.add("sparkle");
+        sparkle.style.left = Math.random() * 100 + "vw";
+        sparkle.style.animationDuration = 4 + Math.random() * 5 + "s";
+        sparkle.style.animationDelay = Math.random() * 5 + "s";
+        sparkle.style.background = `radial-gradient(circle, #fff, ${
+          ["#ffd6e9", "#ffe6fa", "#ffb6c1", "#ffeef5"][Math.floor(Math.random() * 4)]
+        })`;
+        document.body.appendChild(sparkle);
+      }
+    }
+  </script>
+</body>
+</html>
